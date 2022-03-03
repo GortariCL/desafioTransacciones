@@ -24,6 +24,8 @@ UPDATE producto SET stock = stock - 5 WHERE descripcion = 'producto9';
 
 COMMIT;
 
+SELECT * FROM producto WHERE descripcion = 'producto9';
+
 -- 3. El cliente usuario02 ha realizado la siguiente compra:
 -- ● producto: producto1, producto2, producto8
 -- ● cantidad: 3 de cada producto
@@ -64,12 +66,10 @@ SELECT * FROM compra WHERE id = (SELECT max(id) FROM compra);
 \set AUTOCOMMIT off
 
 BEGIN TRANSACTION;
-INSERT INTO cliente(id, nombre, email)
-VALUES('usuario011', usuario011@gmail.com);
-SAVEPOINT nuevo_cliente;
+INSERT INTO cliente(nombre, email)
+VALUES('usuario011','usuario011@gmail.com');
 SELECT * FROM cliente WHERE id = (SELECT MAX(id) FROM cliente);
-ROLLBACK TO nuevo_cliente;
-COMMIT;
+ROLLBACK;
 SELECT * FROM cliente WHERE id = (SELECT MAX(id) FROM cliente);
 
 \set AUTOCOMMIT on
